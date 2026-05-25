@@ -13,8 +13,9 @@ impl Default for App {
     fn default() -> Self {
         Self {
             llm_handle: LLM::new(
-                std::env::var("API_KEY").unwrap_or_else(|_| "api-key".to_string()),
-                "http://127.0.0.1:8080/v1/chat/completions".to_string(),
+                std::env::var("API_KEY")
+                    .unwrap_or_else(|_| "sk-6cb0c095a630453aa9b6194f38dadf07".to_string()),
+                "https://api.deepseek.com/v1/chat/completions".to_string(),
             ),
             input: String::new(),
             is_quit: false,

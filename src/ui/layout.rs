@@ -66,6 +66,6 @@ pub fn draw(frame: &mut Frame, app: &mut App) {
     frame.render_widget(block.clone(), top_right);
     frame.render_widget(block.clone(), bottom_right);
 
-    chat_window::draw(frame, top_left, app).unwrap();
     input_bar::draw(frame, bottom_left, app).unwrap();
+    chat_window::draw(frame, top_left, app).unwrap();
 }

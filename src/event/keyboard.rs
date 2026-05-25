@@ -1,6 +1,6 @@
 use std::time::Duration;
 
-use crossterm::event::{self, Event, KeyCode};
+use crossterm::event::{self, Event, KeyCode, KeyModifiers};
 
 use crate::data::app::App;
 
@@ -9,7 +9,16 @@ pub async fn event(app: &mut App) {
         && let Event::Key(key) = event::read().unwrap()
     {
         match key.code {
-            KeyCode::Esc => app.is_quit = true,
+            KeyCode::Char('q') if key.modifiers.contains(KeyModifiers::CONTROL) => {
+                app.is_quit = true
+            }
+            KeyCode::Char('c') if key.modifiers.contains(KeyModifiers::CONTROL) => {
+                app.llm_handle.abort();
+            }
+            KeyCode::Char('z') if key.modifiers.contains(KeyModifiers::CONTROL) => {
+                let msg = app.llm_handle.withdraw();
+                app.input = msg;
+            }
             KeyCode::Char(c) => {
                 app.input.push(c);
             }
